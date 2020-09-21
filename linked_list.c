@@ -50,16 +50,16 @@ void swap_pair(node_t **head)
     }
 }
 
-node_t *reverse(node_t *head)
+void reverse(node_t **head)
 {
     node_t *cursor = NULL;
-    while (head) {
-        node_t *next = head->next;
-        head->next = cursor;
-	cursor = head;
-        head = next;
+    while (*head) {
+        node_t *next = (*head)->next;
+        (*head)->next = cursor;
+	    cursor = *head;
+        *head = next;
     }
-    return cursor;
+    *head = cursor;
 }
 
 void print_list(node_t *head)
@@ -98,7 +98,7 @@ int main(int argc, char const *argv[])
     swap_pair(&head);
     print_list(head);
 
-    head = reverse(head);
+    reverse(&head);
     print_list(head);
 
     return 0;
