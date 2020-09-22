@@ -7,6 +7,18 @@ typedef struct __node {
     struct __node *next;
 } node_t;
 
+node_t *rev_recursive(node_t *original_head) {
+    if( original_head == NULL )
+        return NULL;
+    if( original_head->next == NULL )
+        return original_head;
+    
+    node_t *rev_head = rev_recursive( original_head->next );
+    original_head->next->next = original_head;
+    original_head->next = NULL;
+    return rev_head;
+}
+
 void add_entry(node_t **head, int new_value)
 {
     node_t **indirect = head;
@@ -52,14 +64,7 @@ void swap_pair(node_t **head)
 
 void reverse(node_t **head)
 {
-    node_t *cursor = NULL;
-    while (*head) {
-        node_t *next = (*head)->next;
-        (*head)->next = cursor;
-	    cursor = *head;
-        *head = next;
-    }
-    *head = cursor;
+    *head = rev_recursive(*head);
 }
 
 void print_list(node_t *head)
